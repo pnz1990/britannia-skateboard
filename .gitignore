@@ -1,0 +1,34 @@
+# macOS system files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Original website file (keep as reference but don't track changes)
+current.html
+
+# Video files (optional - uncomment if you want to exclude large video files)
+# *.mov
+# *.mp4
+# *.avi
+# *.mkv
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+*.tmp
+*.temp
