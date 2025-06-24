@@ -87,8 +87,9 @@
                 background-attachment: scroll;
             }
             
-            .video-background video {
-                opacity: 0.3;
+            .video-background video,
+            .video-background img {
+                opacity: 1;
                 transform: scale(1.1);
                 object-position: center center;
                 display: block !important; /* Force video to stay visible */
@@ -96,8 +97,9 @@
         }
 
         @media (max-width: 480px) {
-            .video-background video {
-                opacity: 0.2;
+            .video-background video,
+            .video-background img {
+                opacity: 1;
                 transform: scale(1.2);
                 display: block !important; /* Force video to stay visible */
             }
@@ -972,7 +974,7 @@
             }
 
             .video-overlay {
-                background: rgba(255, 255, 255, 0.6);
+                background: rgba(255, 255, 255, 0.3);
             }
 
             .container {
@@ -1795,9 +1797,8 @@
             gifFallback.style.display = 'none';
             
             if (isMobile) {
-                // On mobile, reduce video opacity
-                video.style.opacity = '0.3';
-                videoOverlay.style.background = 'rgba(255, 255, 255, 0.6)';
+                // On mobile, keep same opacity as desktop
+                videoOverlay.style.background = 'rgba(255, 255, 255, 0.3)';
                 
                 // Try to force play on mobile
                 const playVideo = () => {
@@ -1858,11 +1859,8 @@
                 console.log('Video is playing');
                 video.style.display = 'block';
                 gifFallback.style.display = 'none';
-                if (isMobile) {
-                    video.style.opacity = '0.3';
-                } else {
-                    video.style.opacity = '1';
-                }
+                // Keep consistent opacity across all devices
+                video.style.opacity = '1';
             });
 
             // If video fails to load within 5 seconds, switch to GIF
