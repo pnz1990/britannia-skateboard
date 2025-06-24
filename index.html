@@ -65,20 +65,20 @@
             height: 100%;
             z-index: -2;
             overflow: hidden;
-            background: linear-gradient(rgba(52, 49, 58, 0.21), rgba(52, 49, 58, 0.21)), 
-                        url('https://d9hhrg4mnvzow.cloudfront.net/www.britanniaskateboardcommittee.com/e9e86d44-benjamin-stoddard-1-1_100000000000000000001o.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
         }
 
-        .video-background video {
+        .video-background video,
+        .video-background img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             opacity: 1;
             min-width: 100%;
             min-height: 100%;
+        }
+
+        .video-background img {
+            display: none;
         }
 
         /* Mobile video optimization */
@@ -1306,11 +1306,9 @@
     <div class="video-background">
         <video autoplay muted loop playsinline preload="metadata" webkit-playsinline>
             <source src="videoplayback.mp4" type="video/mp4">
-            <source src="videoplayback.webm" type="video/webm">
-            <source src="videoplayback.mov" type="video/quicktime">
-            <!-- Fallback for browsers that don't support MP4 -->
-            <source src="videoplayback.webm" type="video/webm">
+            Your browser does not support the video tag.
         </video>
+        <img src="videoplayback.gif" alt="Skateboarding background animation">
     </div>
     <div class="video-overlay"></div>
 
@@ -1778,17 +1776,26 @@
 
         // Video background handling
         const video = document.querySelector('.video-background video');
+        const gifFallback = document.querySelector('.video-background img');
         const videoOverlay = document.querySelector('.video-overlay');
         
-        if (video) {
+        if (video && gifFallback) {
             // Check if device is mobile
             const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
             
+            // Function to switch to GIF fallback
+            const switchToGif = () => {
+                console.log('Switching to GIF fallback');
+                video.style.display = 'none';
+                gifFallback.style.display = 'block';
+            };
+            
             // Force video to be visible initially
             video.style.display = 'block';
+            gifFallback.style.display = 'none';
             
             if (isMobile) {
-                // On mobile, reduce video opacity but keep it visible
+                // On mobile, reduce video opacity
                 video.style.opacity = '0.3';
                 videoOverlay.style.background = 'rgba(255, 255, 255, 0.6)';
                 
@@ -1797,10 +1804,10 @@
                     video.play().then(() => {
                         console.log('Video playing successfully on mobile');
                         video.style.display = 'block';
+                        gifFallback.style.display = 'none';
                     }).catch((error) => {
-                        console.log('Video autoplay failed on mobile:', error);
-                        // Don't hide video, let user potentially interact to start it
-                        video.style.opacity = '0.2';
+                        console.log('Video autoplay failed on mobile, using GIF:', error);
+                        switchToGif();
                     });
                 };
                 
@@ -1814,38 +1821,35 @@
                 const startVideoOnInteraction = () => {
                     video.play().then(() => {
                         console.log('Video started after user interaction');
+                        video.style.display = 'block';
+                        gifFallback.style.display = 'none';
                         document.removeEventListener('touchstart', startVideoOnInteraction);
                         document.removeEventListener('click', startVideoOnInteraction);
-                    }).catch(console.log);
+                    }).catch(() => {
+                        console.log('Video failed even after interaction, using GIF');
+                        switchToGif();
+                    });
                 };
                 
                 document.addEventListener('touchstart', startVideoOnInteraction, { once: true });
                 document.addEventListener('click', startVideoOnInteraction, { once: true });
             }
 
-            // Handle video load errors - but don't hide immediately
+            // Handle video load errors - switch to GIF
             video.addEventListener('error', function(e) {
-                console.log('Video error:', e);
-                // Only hide after multiple failed attempts
-                setTimeout(() => {
-                    if (video.networkState === video.NETWORK_NO_SOURCE) {
-                        console.log('No video source available, using background image');
-                        video.style.display = 'none';
-                    }
-                }, 3000);
+                console.log('Video error, switching to GIF:', e);
+                switchToGif();
             });
 
             // When video loads successfully, ensure it's visible
             video.addEventListener('loadeddata', function() {
                 console.log('Video loaded successfully');
                 video.style.display = 'block';
+                gifFallback.style.display = 'none';
                 
                 video.play().catch(function(error) {
-                    console.log('Initial autoplay failed:', error);
-                    // Don't hide video, just reduce opacity
-                    if (isMobile) {
-                        video.style.opacity = '0.2';
-                    }
+                    console.log('Video play failed after load, using GIF:', error);
+                    switchToGif();
                 });
             });
 
@@ -1853,12 +1857,21 @@
             video.addEventListener('play', function() {
                 console.log('Video is playing');
                 video.style.display = 'block';
+                gifFallback.style.display = 'none';
                 if (isMobile) {
                     video.style.opacity = '0.3';
                 } else {
                     video.style.opacity = '1';
                 }
             });
+
+            // If video fails to load within 5 seconds, switch to GIF
+            setTimeout(() => {
+                if (video.readyState === 0) {
+                    console.log('Video failed to load within 5 seconds, using GIF');
+                    switchToGif();
+                }
+            }, 5000);
 
             // Pause video when page is not visible (performance optimization)
             document.addEventListener('visibilitychange', function() {
@@ -1882,7 +1895,7 @@
 
             // Debug: Log video state
             console.log('Video element:', video);
-            console.log('Video sources:', video.querySelectorAll('source'));
+            console.log('GIF fallback:', gifFallback);
             console.log('Is mobile:', isMobile);
         }
 

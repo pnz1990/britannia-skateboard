@@ -58,8 +58,6 @@
         
         <video id="test-video" controls preload="metadata" playsinline webkit-playsinline muted>
             <source src="videoplayback.mp4" type="video/mp4">
-            <source src="videoplayback.webm" type="video/webm">
-            <source src="videoplayback.mov" type="video/quicktime">
             Your browser does not support the video tag.
         </video>
         
@@ -67,6 +65,12 @@
             <button onclick="playVideo()">Play Video</button>
             <button onclick="pauseVideo()">Pause Video</button>
             <button onclick="checkSupport()">Check Support</button>
+            <button onclick="showGif()">Show GIF Fallback</button>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <h3>GIF Fallback Test:</h3>
+            <img id="gif-test" src="videoplayback.gif" alt="GIF fallback" style="max-width: 400px; display: none; border: 2px solid #ccc; border-radius: 5px;">
         </div>
         
         <div class="info">
@@ -123,9 +127,9 @@
         
         function checkSupport() {
             const formats = [
-                { type: 'video/mp4; codecs="avc1.42E01E"', ext: 'MP4 (H.264)' },
-                { type: 'video/webm; codecs="vp9"', ext: 'WebM (VP9)' },
-                { type: 'video/quicktime', ext: 'MOV (QuickTime)' }
+                { type: 'video/mp4; codecs="avc1.42E01E"', ext: 'MP4 (H.264 Baseline)' },
+                { type: 'video/mp4; codecs="avc1.4D401E"', ext: 'MP4 (H.264 Main)' },
+                { type: 'video/mp4', ext: 'MP4 (Generic)' }
             ];
             
             let support = 'Format Support:<br>';
@@ -135,6 +139,12 @@
             });
             
             videoStatus.innerHTML = support;
+        }
+        
+        function showGif() {
+            const gif = document.getElementById('gif-test');
+            gif.style.display = gif.style.display === 'none' ? 'block' : 'none';
+            log('GIF fallback ' + (gif.style.display === 'block' ? 'shown' : 'hidden'));
         }
         
         // Auto-check on load
