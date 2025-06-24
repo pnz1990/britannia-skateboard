@@ -227,6 +227,22 @@
             font-weight: 300;
         }
 
+        .hero-logo {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .hero-logo img {
+            max-width: 200px;
+            height: auto;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .hero-logo img:hover {
+            transform: scale(1.05);
+        }
+
         .hero-cta {
             display: inline-flex;
             gap: 1rem;
@@ -1105,6 +1121,10 @@
                 margin: 0.5rem 0;
             }
 
+            .hero-logo img {
+                max-width: 150px;
+            }
+
             .hero-cta {
                 flex-direction: column;
                 align-items: center;
@@ -1337,13 +1357,15 @@
         <div class="hero-content">
             <h1>Britannia Skateboard Committee</h1>
             <p class="hero-subtitle">Building community through skateboarding in Vancouver</p>
+            <div class="hero-logo">
+                <img src="logo.png" alt="Britannia Skateboard Committee Logo">
+            </div>
             <div class="hero-cta">
                 <a href="#about" class="btn btn-secondary">Learn More</a>
                 <a href="#contact" class="btn btn-secondary">Get Involved</a>
                 <a href="https://www.canadahelps.org/en/dn/99781" target="_blank" class="btn btn-secondary">Donate</a>
             </div>
         </div>
-        <div class="hero-credit">Photo by Ben Stoddard</div>
     </section>
 
     <!-- Land Acknowledgment -->
