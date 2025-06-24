@@ -500,9 +500,30 @@
 
         /* Special Features Section */
         .special-section {
-            background: var(--gradient-tertiary);
+            background: rgba(162, 187, 97, 0.95);
+            backdrop-filter: blur(10px);
             color: white;
             padding: 5rem 0;
+            position: relative;
+        }
+
+        .special-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(162, 187, 97, 0.9);
+            z-index: -1;
+        }
+
+        .special-section .section-title {
+            color: white;
+        }
+
+        .special-section .section-title::after {
+            background: var(--gradient-primary);
         }
 
         .special-features {
@@ -1088,7 +1109,8 @@
                 background: rgba(241, 167, 96, 0.95);
             }
 
-            .will-do-section::before {
+            .will-do-section::before,
+            .special-section::before {
                 background: rgba(162, 187, 97, 0.95);
             }
         }
@@ -1151,7 +1173,8 @@
                 background: rgba(241, 167, 96, 0.98);
             }
 
-            .will-do-section::before {
+            .will-do-section::before,
+            .special-section::before {
                 background: rgba(162, 187, 97, 0.98);
             }
 
