@@ -39,6 +39,12 @@
             box-sizing: border-box;
         }
 
+        html {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
@@ -46,6 +52,8 @@
             overflow-x: hidden;
             background: #ffffff;
             position: relative;
+            width: 100%;
+            max-width: 100vw;
         }
 
         /* Video Background */
@@ -69,6 +77,28 @@
             height: 100%;
             object-fit: cover;
             opacity: 1;
+            min-width: 100%;
+            min-height: 100%;
+        }
+
+        /* Mobile video optimization */
+        @media (max-width: 768px) {
+            .video-background {
+                background-attachment: scroll;
+            }
+            
+            .video-background video {
+                opacity: 0.3;
+                transform: scale(1.1);
+                object-position: center center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .video-background video {
+                opacity: 0.2;
+                transform: scale(1.2);
+            }
         }
 
         .video-overlay {
@@ -86,6 +116,8 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         /* Header & Navigation */
@@ -933,11 +965,40 @@
         /* Video Background Responsive */
         @media (max-width: 768px) {
             .video-background video {
-                opacity: 1;
+                opacity: 0.3;
+                transform: scale(1.1);
             }
 
             .video-overlay {
-                background: rgba(255, 255, 255, 0.4);
+                background: rgba(255, 255, 255, 0.6);
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+
+            /* Prevent horizontal scroll */
+            body {
+                overflow-x: hidden;
+                width: 100%;
+                max-width: 100vw;
+            }
+
+            * {
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+
+            /* Fix any elements that might cause horizontal scroll */
+            .hero-content,
+            .section-header,
+            .welcome-content,
+            .history-content,
+            .meetings-content,
+            .contact-content {
+                width: 100%;
+                max-width: 100%;
+                overflow: hidden;
             }
 
             .nav-links {
@@ -1013,24 +1074,69 @@
 
         @media (max-width: 480px) {
             .container {
-                padding: 0 15px;
+                padding: 0 10px;
             }
 
             .hero h1 {
                 font-size: 2rem;
+                word-wrap: break-word;
+                hyphens: auto;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+                word-wrap: break-word;
             }
 
             .section-title {
-                font-size: 2rem;
+                font-size: 1.8rem;
+                word-wrap: break-word;
             }
 
             .btn {
                 padding: 10px 20px;
                 font-size: 0.9rem;
+                width: 100%;
+                max-width: 200px;
+                margin: 0.5rem 0;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
             }
 
             .video-background video {
-                opacity: 1;
+                opacity: 0.2;
+                transform: scale(1.2);
+            }
+
+            /* Stronger backgrounds for better readability on mobile */
+            .welcome::before,
+            .history-section::before {
+                background: rgba(223, 210, 190, 0.98);
+            }
+
+            .press-section::before {
+                background: rgba(105, 112, 119, 0.98);
+            }
+
+            .meetings-section::before {
+                background: rgba(241, 167, 96, 0.98);
+            }
+
+            .will-do-section::before {
+                background: rgba(162, 187, 97, 0.98);
+            }
+
+            /* Ensure text is readable */
+            .section-title,
+            .welcome-text h2,
+            .meetings-info h2,
+            .donation-info h2 {
+                line-height: 1.2;
+                word-wrap: break-word;
             }
         }
 
@@ -1671,6 +1777,20 @@
         const videoOverlay = document.querySelector('.video-overlay');
         
         if (video) {
+            // Check if device is mobile
+            const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                // On mobile, reduce video quality and add stronger overlay
+                video.style.opacity = '0.2';
+                videoOverlay.style.background = 'rgba(255, 255, 255, 0.7)';
+                
+                // Disable video on very small screens to improve performance
+                if (window.innerWidth <= 480) {
+                    video.style.display = 'none';
+                }
+            }
+
             // Handle video load errors - fallback to hero image
             video.addEventListener('error', function() {
                 console.log('Video failed to load, using hero image fallback');
@@ -1682,7 +1802,10 @@
             video.addEventListener('loadeddata', function() {
                 video.play().catch(function(error) {
                     console.log('Video autoplay failed:', error);
-                    // Keep video visible even if autoplay fails
+                    // On mobile, if autoplay fails, hide video and use background image
+                    if (isMobile) {
+                        video.style.display = 'none';
+                    }
                 });
             });
 
@@ -1695,6 +1818,15 @@
                         console.log('Video resume failed:', error);
                     });
                 }
+            });
+
+            // Handle orientation change on mobile
+            window.addEventListener('orientationchange', function() {
+                setTimeout(function() {
+                    if (isMobile && video.style.display !== 'none') {
+                        video.style.transform = window.innerWidth > window.innerHeight ? 'scale(1.1)' : 'scale(1.2)';
+                    }
+                }, 100);
             });
         }
 
