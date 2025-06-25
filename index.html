@@ -97,10 +97,18 @@
             }
 
             /* Fix background images on mobile */
-            .history-section {
+            .history-section,
+            .special-section {
                 background-attachment: scroll;
-                background-size: cover;
+                background-size: contain;
+                background-repeat: no-repeat;
                 background-position: center center;
+            }
+
+            /* Stronger overlays for mobile readability */
+            .history-section::before,
+            .special-section::before {
+                background: rgba(52, 49, 58, 0.85);
             }
         }
 
@@ -112,12 +120,20 @@
                 display: block !important; /* Force video to stay visible */
             }
 
-            /* Better mobile background positioning */
-            .history-section {
+            /* Better mobile background positioning for both sections */
+            .history-section,
+            .special-section {
                 background-attachment: scroll;
-                background-size: cover;
-                background-position: center top;
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center center;
                 min-height: auto;
+            }
+
+            /* Add stronger overlays for readability */
+            .history-section::before,
+            .special-section::before {
+                background: rgba(52, 49, 58, 0.9);
             }
         }
 
