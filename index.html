@@ -98,7 +98,8 @@
 
             /* Force desktop-like behavior on tablet with !important */
             .history-section,
-            .special-section {
+            .special-section,
+            .will-do-section {
                 background-attachment: scroll !important;
                 background-size: cover !important;
                 background-position: center center !important;
@@ -111,7 +112,8 @@
 
             /* Override any conflicting background rules */
             section.history-section,
-            section.special-section {
+            section.special-section,
+            section.will-do-section {
                 background-size: cover !important;
                 background-position: center center !important;
                 background-attachment: scroll !important;
@@ -119,7 +121,8 @@
 
             /* Moderate overlays for tablet readability */
             .history-section::before,
-            .special-section::before {
+            .special-section::before,
+            .will-do-section::before {
                 background: rgba(52, 49, 58, 0.7) !important;
             }
         }
@@ -134,7 +137,8 @@
 
             /* Force desktop-like behavior on mobile with !important */
             .history-section,
-            .special-section {
+            .special-section,
+            .will-do-section {
                 background-size: cover !important;
                 background-position: center center !important;
                 background-repeat: no-repeat !important;
@@ -147,7 +151,8 @@
 
             /* Override any conflicting background rules */
             section.history-section,
-            section.special-section {
+            section.special-section,
+            section.will-do-section {
                 background-size: cover !important;
                 background-position: center center !important;
                 background-attachment: scroll !important;
@@ -155,7 +160,8 @@
 
             /* Stronger overlays for readability */
             .history-section::before,
-            .special-section::before {
+            .special-section::before,
+            .will-do-section::before {
                 background: rgba(52, 49, 58, 0.8) !important;
                 display: block !important;
             }
@@ -729,8 +735,12 @@
 
         /* Will Do Section */
         .will-do-section {
-            background: rgba(162, 187, 97, 0.95);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(rgba(52, 49, 58, 0.7), rgba(52, 49, 58, 0.7)), 
+                        url('aerial.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
             padding: 5rem 0;
             position: relative;
         }
@@ -742,7 +752,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(162, 187, 97, 0.9);
+            background: rgba(52, 49, 58, 0.6);
             z-index: -1;
         }
 
