@@ -500,8 +500,11 @@
 
         /* Special Features Section */
         .special-section {
-            background: rgba(162, 187, 97, 0.95);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(rgba(52, 49, 58, 0.7), rgba(52, 49, 58, 0.7)), 
+                        url('tennis-texture.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: white;
             padding: 5rem 0;
             position: relative;
@@ -514,7 +517,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(162, 187, 97, 0.9);
+            background: rgba(52, 49, 58, 0.6);
             z-index: -1;
         }
 
@@ -1163,7 +1166,7 @@
 
             .will-do-section::before,
             .special-section::before {
-                background: rgba(162, 187, 97, 0.95);
+                background: rgba(52, 49, 58, 0.8);
             }
         }
 
@@ -1227,7 +1230,7 @@
 
             .will-do-section::before,
             .special-section::before {
-                background: rgba(162, 187, 97, 0.98);
+                background: rgba(52, 49, 58, 0.85);
             }
 
             /* Ensure text is readable */
