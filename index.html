@@ -96,13 +96,17 @@
                 display: block !important; /* Force video to stay visible */
             }
 
-            /* Better background scaling on tablet */
+            /* Match desktop behavior on tablet */
             .history-section,
             .special-section {
                 background-attachment: scroll;
-                background-size: auto 80%;
+                background-size: cover;
                 background-position: center center;
                 background-repeat: no-repeat;
+                /* Force proper rendering like desktop */
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
             }
 
             /* Moderate overlays for tablet readability */
@@ -120,19 +124,17 @@
                 display: block !important; /* Force video to stay visible */
             }
 
-            /* Keep images but fix scaling on mobile */
-            .history-section {
-                background-size: auto 100%;
-                background-position: center center;
-                background-repeat: no-repeat;
-                background-attachment: scroll;
-            }
-
+            /* Match desktop behavior on mobile */
+            .history-section,
             .special-section {
-                background-size: auto 100%;
+                background-size: cover;
                 background-position: center center;
                 background-repeat: no-repeat;
                 background-attachment: scroll;
+                /* Force proper rendering like desktop */
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
             }
 
             /* Stronger overlays for readability */
