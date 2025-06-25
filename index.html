@@ -96,23 +96,31 @@
                 display: block !important; /* Force video to stay visible */
             }
 
-            /* Match desktop behavior on tablet */
+            /* Force desktop-like behavior on tablet with !important */
             .history-section,
             .special-section {
-                background-attachment: scroll;
-                background-size: cover;
-                background-position: center center;
-                background-repeat: no-repeat;
+                background-attachment: scroll !important;
+                background-size: cover !important;
+                background-position: center center !important;
+                background-repeat: no-repeat !important;
                 /* Force proper rendering like desktop */
-                -webkit-background-size: cover;
-                -moz-background-size: cover;
-                -o-background-size: cover;
+                -webkit-background-size: cover !important;
+                -moz-background-size: cover !important;
+                -o-background-size: cover !important;
+            }
+
+            /* Override any conflicting background rules */
+            section.history-section,
+            section.special-section {
+                background-size: cover !important;
+                background-position: center center !important;
+                background-attachment: scroll !important;
             }
 
             /* Moderate overlays for tablet readability */
             .history-section::before,
             .special-section::before {
-                background: rgba(52, 49, 58, 0.7);
+                background: rgba(52, 49, 58, 0.7) !important;
             }
         }
 
@@ -124,24 +132,32 @@
                 display: block !important; /* Force video to stay visible */
             }
 
-            /* Match desktop behavior on mobile */
+            /* Force desktop-like behavior on mobile with !important */
             .history-section,
             .special-section {
-                background-size: cover;
-                background-position: center center;
-                background-repeat: no-repeat;
-                background-attachment: scroll;
+                background-size: cover !important;
+                background-position: center center !important;
+                background-repeat: no-repeat !important;
+                background-attachment: scroll !important;
                 /* Force proper rendering like desktop */
-                -webkit-background-size: cover;
-                -moz-background-size: cover;
-                -o-background-size: cover;
+                -webkit-background-size: cover !important;
+                -moz-background-size: cover !important;
+                -o-background-size: cover !important;
+            }
+
+            /* Override any conflicting background rules */
+            section.history-section,
+            section.special-section {
+                background-size: cover !important;
+                background-position: center center !important;
+                background-attachment: scroll !important;
             }
 
             /* Stronger overlays for readability */
             .history-section::before,
             .special-section::before {
-                background: rgba(52, 49, 58, 0.8);
-                display: block;
+                background: rgba(52, 49, 58, 0.8) !important;
+                display: block !important;
             }
         }
 
