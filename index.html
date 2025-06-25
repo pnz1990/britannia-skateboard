@@ -95,6 +95,13 @@
                 object-position: center center;
                 display: block !important; /* Force video to stay visible */
             }
+
+            /* Fix background images on mobile */
+            .history-section {
+                background-attachment: scroll;
+                background-size: cover;
+                background-position: center center;
+            }
         }
 
         @media (max-width: 480px) {
@@ -103,6 +110,14 @@
                 opacity: 1;
                 transform: scale(1.2);
                 display: block !important; /* Force video to stay visible */
+            }
+
+            /* Better mobile background positioning */
+            .history-section {
+                background-attachment: scroll;
+                background-size: cover;
+                background-position: center top;
+                min-height: auto;
             }
         }
 
