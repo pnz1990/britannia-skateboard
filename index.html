@@ -925,7 +925,7 @@
 
         /* Meetings Section */
         .meetings-section {
-            background: rgba(241, 167, 96, 0.95);
+            background: rgba(241, 167, 96, 0.3);
             backdrop-filter: blur(10px);
             padding: 4rem 0;
             position: relative;
@@ -938,7 +938,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(241, 167, 96, 0.9);
+            background: rgba(241, 167, 96, 0.8);
             z-index: -1;
         }
 
@@ -995,9 +995,22 @@
 
         /* Contact Section */
         .contact-section {
-            background: var(--gradient-secondary);
+            background: rgba(162, 187, 97, 0.3);
+            backdrop-filter: blur(10px);
             color: var(--text-dark);
             padding: 5rem 0;
+            position: relative;
+        }
+
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(162, 187, 97, 0.8);
+            z-index: -1;
         }
 
         .contact-content {
@@ -1223,6 +1236,8 @@
 
             /* Ensure text sections have stronger backgrounds on mobile */
             .welcome::before,
+            .meetings-section::before,
+            .contact-section::before,
             .history-section::before {
                 background: rgba(52, 49, 58, 0.85);
             }
@@ -1232,7 +1247,7 @@
             }
 
             .meetings-section::before {
-                background: rgba(241, 167, 96, 0.95);
+                background: rgba(241, 167, 96, 0.85);
             }
 
             .will-do-section::before,
@@ -1287,6 +1302,8 @@
 
             /* Stronger backgrounds for better readability on mobile */
             .welcome::before,
+            .meetings-section::before,
+            .contact-section::before,
             .history-section::before {
                 background: rgba(52, 49, 58, 0.9);
             }
@@ -1296,7 +1313,7 @@
             }
 
             .meetings-section::before {
-                background: rgba(241, 167, 96, 0.98);
+                background: rgba(241, 167, 96, 0.9);
             }
 
             .will-do-section::before,
