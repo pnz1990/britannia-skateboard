@@ -6,6 +6,8 @@
     min-width: 100% !important;
     width: 100% !important;
     overflow-x: hidden !important;
+    height: auto !important;
+    min-height: 100vh !important;
 }
 #lp-pom-root .lp-positioned-content {
     width: 100% !important;
@@ -34,9 +36,14 @@
     filter: none !important;
     perspective: none !important;
     contain: none !important;
+    overflow: visible !important;
 }
 /* Ensure Unbounce body/root don't block the video */
-.lp-pom-body,
+.lp-pom-body {
+    background: transparent !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+}
 #lp-pom-root,
 #lp-pom-block-11,
 #lp-pom-root-color-overlay,
