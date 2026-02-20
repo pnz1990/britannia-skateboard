@@ -1,0 +1,375 @@
+<script>
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Header scroll effect
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('.header');
+        if (header) {
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        }
+    });
+
+    // Mobile menu functionality
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (mobileMenuBtn && navLinks) {
+        mobileMenuBtn.addEventListener('click', function() {
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.right = '0';
+                navLinks.style.background = 'rgba(255, 255, 255, 0.98)';
+                navLinks.style.padding = '1rem';
+                navLinks.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mobileMenuBtn.contains(e.target) && !navLinks.contains(e.target)) {
+                navLinks.style.display = 'none';
+            }
+        });
+    }
+
+    // Intersection Observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    // Observe elements for animation
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        observer.observe(el);
+    });
+
+    // Set current year in footer
+    const currentYearElement = document.getElementById('current-year');
+    if (currentYearElement) {
+        currentYearElement.textContent = new Date().getFullYear();
+    }
+
+    // Video background handling
+    const video = document.querySelector('.video-background video');
+    const gifFallback = document.querySelector('.video-background img');
+    const videoOverlay = document.querySelector('.video-overlay');
+    
+    if (video && gifFallback) {
+        // Check if device is mobile
+        const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        // Function to switch to GIF fallback
+        const switchToGif = () => {
+            console.log('Switching to GIF fallback');
+            video.style.display = 'none';
+            gifFallback.style.display = 'block';
+        };
+        
+        // Force video to be visible initially
+        video.style.display = 'block';
+        gifFallback.style.display = 'none';
+        
+        if (isMobile) {
+            // On mobile, keep same opacity as desktop
+            if (videoOverlay) {
+                videoOverlay.style.background = 'rgba(255, 255, 255, 0.3)';
+            }
+            
+            // Try to force play on mobile
+            const playVideo = () => {
+                video.play().then(() => {
+                    console.log('Video playing successfully on mobile');
+                    video.style.display = 'block';
+                    gifFallback.style.display = 'none';
+                }).catch((error) => {
+                    console.log('Video autoplay failed on mobile, using GIF:', error);
+                    switchToGif();
+                });
+            };
+            
+            // Try multiple approaches to start video
+            playVideo();
+            
+            // Try again after a short delay
+            setTimeout(playVideo, 1000);
+            
+            // Try to play on user interaction
+            const startVideoOnInteraction = () => {
+                video.play().then(() => {
+                    console.log('Video started after user interaction');
+                    video.style.display = 'block';
+                    gifFallback.style.display = 'none';
+                    document.removeEventListener('touchstart', startVideoOnInteraction);
+                    document.removeEventListener('click', startVideoOnInteraction);
+                }).catch(() => {
+                    console.log('Video failed even after interaction, using GIF');
+                    switchToGif();
+                });
+            };
+            
+            document.addEventListener('touchstart', startVideoOnInteraction, { once: true });
+            document.addEventListener('click', startVideoOnInteraction, { once: true });
+        }
+
+        // Handle video load errors - switch to GIF
+        video.addEventListener('error', function(e) {
+            console.log('Video error, switching to GIF:', e);
+            switchToGif();
+        });
+
+        // When video loads successfully, ensure it's visible
+        video.addEventListener('loadeddata', function() {
+            console.log('Video loaded successfully');
+            video.style.display = 'block';
+            gifFallback.style.display = 'none';
+            
+            video.play().catch(function(error) {
+                console.log('Video play failed after load, using GIF:', error);
+                switchToGif();
+            });
+        });
+
+        // Handle successful play
+        video.addEventListener('play', function() {
+            console.log('Video is playing');
+            video.style.display = 'block';
+            gifFallback.style.display = 'none';
+            // Keep consistent opacity across all devices
+            video.style.opacity = '1';
+        });
+
+        // If video fails to load within 5 seconds, switch to GIF
+        setTimeout(() => {
+            if (video.readyState === 0) {
+                console.log('Video failed to load within 5 seconds, using GIF');
+                switchToGif();
+            }
+        }, 5000);
+
+        // Pause video when page is not visible (performance optimization)
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                video.pause();
+            } else {
+                video.play().catch(function(error) {
+                    console.log('Video resume failed:', error);
+                });
+            }
+        });
+
+        // Handle orientation change on mobile
+        window.addEventListener('orientationchange', function() {
+            setTimeout(function() {
+                if (isMobile && video.style.display !== 'none') {
+                    video.style.transform = window.innerWidth > window.innerHeight ? 'scale(1.1)' : 'scale(1.2)';
+                }
+            }, 100);
+        });
+
+        // Debug: Log video state
+        console.log('Video element:', video);
+        console.log('GIF fallback:', gifFallback);
+        console.log('Is mobile:', isMobile);
+    }
+
+    // Lazy loading for images
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                if (img.dataset.src) {
+                    img.src = img.dataset.src;
+                    img.classList.remove('lazy');
+                    imageObserver.unobserve(img);
+                }
+            }
+        });
+    });
+
+    // Apply lazy loading to images with data-src attribute
+    document.querySelectorAll('img[data-src]').forEach(img => {
+        imageObserver.observe(img);
+    });
+
+    // Handle image loading errors
+    document.querySelectorAll('img').forEach(img => {
+        img.addEventListener('error', function() {
+            // Create a placeholder div
+            const placeholder = document.createElement('div');
+            placeholder.className = 'image-placeholder';
+            placeholder.textContent = '🛹 Image Loading...';
+            placeholder.style.cssText = `
+                background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #6c757d;
+                font-size: 1rem;
+                text-align: center;
+                padding: 2rem;
+                border-radius: 10px;
+                width: 100%;
+                height: ${this.height || 250}px;
+            `;
+            
+            // Replace the broken image with placeholder
+            if (this.parentNode) {
+                this.parentNode.replaceChild(placeholder, this);
+            }
+        });
+    });
+
+    // Enhanced scroll animations with stagger effect
+    const staggerObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, index * 100); // Stagger by 100ms
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    // Apply stagger animation to grid items
+    document.querySelectorAll('.goals-grid .goal-card, .special-features .feature, .will-do-grid .will-do-item, .photo-gallery .photo-item, .press-grid .press-item').forEach(el => {
+        staggerObserver.observe(el);
+    });
+
+    // Parallax effect for background sections (optional, can be disabled for performance)
+    const parallaxElements = document.querySelectorAll('.special-section, .history-section, .will-do-section');
+    
+    if (window.innerWidth > 768 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            
+            parallaxElements.forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight && el.getBoundingClientRect().bottom > 0) {
+                    el.style.transform = `translateY(${rate}px)`;
+                }
+            });
+        });
+    }
+
+    // Smooth reveal animation for text content
+    const textObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, {
+        threshold: 0.2
+    });
+
+    // Apply to text sections
+    document.querySelectorAll('.welcome-text, .history-text, .section-header').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        textObserver.observe(el);
+    });
+
+    // Performance optimization: Reduce animations on low-end devices
+    if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
+        document.documentElement.style.setProperty('--animation-duration', '0.3s');
+    }
+
+    // Accessibility: Respect reduced motion preference
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('*').forEach(el => {
+            el.style.animationDuration = '0.01ms';
+            el.style.animationIterationCount = '1';
+            el.style.transitionDuration = '0.01ms';
+        });
+    }
+
+    // Error handling for external resources
+    window.addEventListener('error', function(e) {
+        if (e.target.tagName === 'IMG') {
+            console.log('Image failed to load:', e.target.src);
+        } else if (e.target.tagName === 'VIDEO') {
+            console.log('Video failed to load:', e.target.src);
+        }
+    }, true);
+
+    // Console log for debugging
+    console.log('Britannia Skateboard Committee website loaded successfully');
+    console.log('User agent:', navigator.userAgent);
+    console.log('Screen size:', window.innerWidth + 'x' + window.innerHeight);
+    console.log('Hardware concurrency:', navigator.hardwareConcurrency);
+});
+
+// Additional utility functions
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Optimized scroll handler
+const optimizedScrollHandler = debounce(() => {
+    // Any additional scroll-based functionality can go here
+}, 16); // ~60fps
+
+window.addEventListener('scroll', optimizedScrollHandler);
+
+// Handle window resize
+const optimizedResizeHandler = debounce(() => {
+    // Recalculate any size-dependent elements
+    const isMobile = window.innerWidth <= 768;
+    document.body.classList.toggle('mobile', isMobile);
+}, 250);
+
+window.addEventListener('resize', optimizedResizeHandler);
+
+// Initial mobile class
+document.body.classList.toggle('mobile', window.innerWidth <= 768);
+    
+
+</script>

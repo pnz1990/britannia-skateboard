@@ -1,0 +1,1269 @@
+<style>
+
+/* CSS Variables and Base Styles */
+:root {
+    --primary-color: rgb(241, 167, 96);
+    --secondary-color: rgb(162, 187, 97);
+    --accent-color: rgb(112, 143, 177);
+    --tertiary-color: rgb(180, 165, 210);
+    --quaternary-color: rgb(223, 210, 190);
+    --grey-color: rgb(105, 112, 119);
+    --dark-color: #1a1a1a;
+    --light-color: #f8f9fa;
+    --text-dark: var(--grey-color);
+    --text-light: rgba(105, 112, 119, 0.7);
+    --gradient-primary: linear-gradient(135deg, rgb(241, 167, 96) 0%, rgb(223, 210, 190) 100%);
+    --gradient-secondary: linear-gradient(135deg, rgb(162, 187, 97) 0%, rgb(112, 143, 177) 100%);
+    --gradient-tertiary: linear-gradient(135deg, rgb(180, 165, 210) 0%, rgb(112, 143, 177) 100%);
+    --gradient-quaternary: linear-gradient(135deg, rgb(112, 143, 177) 0%, rgb(180, 165, 210) 100%);
+    --shadow-light: 0 4px 6px rgba(105, 112, 119, 0.1);
+    --shadow-medium: 0 8px 25px rgba(105, 112, 119, 0.15);
+    --shadow-heavy: 0 15px 35px rgba(105, 112, 119, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    overflow-x: hidden;
+    background: #ffffff;
+    position: relative;
+    width: 100%;
+    max-width: 100vw;
+}
+
+/* Video Background */
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    overflow: hidden;
+}
+
+.video-background video,
+.video-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 1;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.video-background img {
+    display: none;
+}
+
+.video-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Header & Navigation */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: rgba(162, 187, 97, 0.95);
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 500;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    cursor: pointer;
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(52, 49, 58, 0.4), rgba(52, 49, 58, 0.4));
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    position: relative;
+}
+
+.hero-content {
+    max-width: 800px;
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+.hero-logo {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.hero-logo img {
+    max-width: 200px;
+    height: auto;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    transition: transform 0.3s ease;
+}
+
+.hero-logo img:hover {
+    transform: scale(1.05);
+}
+
+.hero-cta {
+    display: inline-flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-medium);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-heavy);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Land Acknowledgment */
+.land-acknowledgment {
+    background: var(--primary-color);
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.land-acknowledgment p {
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.8;
+}
+
+/* Section Styles */
+.section {
+    padding: 5rem 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+    color: var(--text-dark);
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: var(--gradient-secondary);
+    border-radius: 2px;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Welcome Section */
+.welcome {
+    background: rgba(223, 210, 190, 0.3);
+    backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.welcome::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(223, 210, 190, 0.8);
+    z-index: -1;
+}
+
+.welcome-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.welcome-text h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--text-dark);
+}
+
+.welcome-text p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-light);
+}
+
+.welcome-image {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-medium);
+}
+
+.welcome-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.welcome-image:hover img {
+    transform: scale(1.05);
+}
+
+.image-credit {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Animation classes for scroll effects */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Goals Section */
+.goals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.goal-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow-light);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.goal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.goal-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 2rem;
+    color: white;
+}
+
+.goal-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.goal-card p {
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+/* Special Features Section */
+.special-section {
+    background: linear-gradient(rgba(52, 49, 58, 0.7), rgba(52, 49, 58, 0.7)), 
+                url('https://pnz1990.github.io/britannia-skateboard/tennis-texture.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    padding: 5rem 0;
+    position: relative;
+}
+
+.special-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(52, 49, 58, 0.6);
+    z-index: -1;
+}
+
+.special-section .section-title {
+    color: white;
+}
+
+.special-section .section-title::after {
+    background: var(--gradient-primary);
+}
+
+.special-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.feature {
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.feature i {
+    font-size: 3rem;
+    color: var(--quaternary-color);
+    margin-bottom: 1rem;
+}
+
+.feature h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.feature p {
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+/* History Section */
+.history-section {
+    background: linear-gradient(rgba(52, 49, 58, 0.8), rgba(52, 49, 58, 0.8)), 
+                url('https://d9hhrg4mnvzow.cloudfront.net/www.britanniaskateboardcommittee.com/483ea16d-mike-dipietro-1_10q70h9000000000000028.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    position: relative;
+    padding: 5rem 0;
+}
+
+.history-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(52, 49, 58, 0.7);
+    z-index: -1;
+}
+
+.history-content {
+    display: block;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.history-section .section-title {
+    color: white;
+}
+
+.history-section .section-title::after {
+    background: var(--gradient-secondary);
+}
+
+.history-section * {
+    color: white !important;
+}
+
+.history-text {
+    text-align: justify;
+    color: white;
+}
+
+.history-text p {
+    color: white;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.history-text strong {
+    color: white;
+}
+
+.history-actions {
+    list-style: none;
+    margin: 2rem 0;
+    padding-left: 0;
+}
+
+.history-actions li {
+    color: white;
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.history-actions li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* Will Do Section */
+.will-do-section {
+    background: linear-gradient(rgba(52, 49, 58, 0.7), rgba(52, 49, 58, 0.7)), 
+                url('https://pnz1990.github.io/britannia-skateboard/aerial.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    padding: 5rem 0;
+    position: relative;
+}
+
+.will-do-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(52, 49, 58, 0.6);
+    z-index: -1;
+}
+
+.will-do-section .section-title {
+    color: white;
+}
+
+.will-do-section .section-title::after {
+    background: var(--gradient-secondary);
+}
+
+.will-do-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.will-do-item {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow-light);
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.will-do-item:hover {
+    transform: translateY(-3px);
+}
+
+.will-do-item i {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    margin-top: 0.2rem;
+}
+
+.will-do-item p {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Photo Gallery */
+.photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.photo-item {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow-light);
+    transition: transform 0.3s ease;
+}
+
+.photo-item:hover {
+    transform: scale(1.02);
+}
+
+.photo-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+/* Press Section */
+.press-section {
+    background: rgba(105, 112, 119, 0.3);
+    backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.press-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(105, 112, 119, 0.8);
+    z-index: -1;
+}
+
+.press-section .section-title {
+    color: white;
+}
+
+.press-section .section-title::after {
+    background: var(--gradient-primary);
+}
+
+.press-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.press-item {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow-light);
+    transition: transform 0.3s ease;
+    text-decoration: none;
+}
+
+.press-item:hover {
+    transform: translateY(-5px);
+}
+
+.press-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.press-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    color: white;
+    padding: 2rem 1rem 1rem;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.press-item:hover .press-overlay {
+    transform: translateY(0);
+}
+
+.press-overlay h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Video Section */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.video-item {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow-medium);
+}
+
+.video-item iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Meetings Section */
+.meetings-section {
+    background: rgba(241, 167, 96, 0.3);
+    backdrop-filter: blur(10px);
+    padding: 4rem 0;
+    position: relative;
+}
+
+.meetings-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(241, 167, 96, 0.8);
+    z-index: -1;
+}
+
+.meetings-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.meetings-info h2,
+.donation-info h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--text-dark);
+    text-align: center;
+}
+
+.meeting-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.next-meeting {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 1.5rem;
+    border-radius: 10px;
+}
+
+.next-meeting h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+
+.next-meeting p {
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+}
+
+.donation-info {
+    text-align: center;
+}
+
+.donation-info p {
+    margin-bottom: 1.5rem;
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+/* Contact Section */
+.contact-section {
+    background: rgba(162, 187, 97, 0.3);
+    backdrop-filter: blur(10px);
+    color: var(--text-dark);
+    padding: 5rem 0;
+    position: relative;
+}
+
+.contact-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(162, 187, 97, 0.8);
+    z-index: -1;
+}
+
+.contact-section .section-title {
+    color: white;
+}
+
+.contact-section .section-subtitle {
+    color: rgba(255,255,255,0.8);
+}
+
+.contact-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.2rem;
+}
+
+.contact-item i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    width: 30px;
+}
+
+.contact-item a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-item a:hover {
+    color: var(--quaternary-color);
+}
+
+.contact-item span {
+    color: white;
+}
+
+.partner-logos {
+    text-align: center;
+}
+
+.partner-logos img {
+    max-width: 200px;
+    height: auto;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.partner-logos img:hover {
+    opacity: 1;
+}
+
+.britannia-logo {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+.footer {
+    background: var(--dark-color);
+    color: white;
+    padding: 3rem 0 1rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-logo h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.footer-logo p {
+    opacity: 0.8;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+}
+
+.footer-social {
+    display: flex;
+    gap: 1rem;
+}
+
+.footer-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-social a:hover {
+    background: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1rem;
+    text-align: center;
+    opacity: 0.6;
+}
+
+/* Image handling */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.image-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: inherit;
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+    .video-background video {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    .video-background img {
+        display: none;
+    }
+
+    .video-overlay {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+
+    body {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100vw;
+    }
+
+    * {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-cta {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .welcome-content,
+    .history-content,
+    .meetings-content,
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 2rem;
+    }
+
+    .footer-social {
+        justify-content: center;
+    }
+
+    .section {
+        padding: 3rem 0;
+    }
+
+    .goals-grid,
+    .special-features,
+    .will-do-grid,
+    .photo-gallery,
+    .press-grid,
+    .video-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .video-item {
+        min-height: 250px;
+    }
+
+    /* Force desktop-like behavior on tablet with !important */
+    .history-section,
+    .special-section,
+    .will-do-section {
+        background-attachment: scroll !important;
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+        -webkit-background-size: cover !important;
+        -moz-background-size: cover !important;
+        -o-background-size: cover !important;
+    }
+
+    .history-section::before,
+    .special-section::before,
+    .will-do-section::before {
+        background: rgba(52, 49, 58, 0.7) !important;
+    }
+
+    .welcome::before,
+    .meetings-section::before,
+    .contact-section::before,
+    .press-section::before {
+        background: rgba(52, 49, 58, 0.85);
+    }
+
+    .press-section::before {
+        background: rgba(105, 112, 119, 0.85);
+    }
+
+    .meetings-section::before {
+        background: rgba(241, 167, 96, 0.85);
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 10px;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+        word-wrap: break-word;
+        hyphens: auto;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+        word-wrap: break-word;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+        word-wrap: break-word;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        width: 100%;
+        max-width: 200px;
+        margin: 0.5rem 0;
+    }
+
+    .hero-logo img {
+        max-width: 150px;
+    }
+
+    .hero-cta {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .video-background video {
+        opacity: 1;
+        transform: scale(1.2);
+        display: block !important;
+    }
+
+    /* Force desktop-like behavior on mobile with !important */
+    .history-section,
+    .special-section,
+    .will-do-section {
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+        background-attachment: scroll !important;
+        -webkit-background-size: cover !important;
+        -moz-background-size: cover !important;
+        -o-background-size: cover !important;
+    }
+
+    .history-section::before,
+    .special-section::before,
+    .will-do-section::before {
+        background: rgba(52, 49, 58, 0.8) !important;
+        display: block !important;
+    }
+
+    .welcome::before,
+    .meetings-section::before,
+    .contact-section::before,
+    .press-section::before {
+        background: rgba(52, 49, 58, 0.9);
+    }
+
+    .press-section::before {
+        background: rgba(105, 112, 119, 0.9);
+    }
+
+    .meetings-section::before {
+        background: rgba(241, 167, 96, 0.9);
+    }
+
+    .section-title,
+    .welcome-text h2,
+    .meetings-info h2,
+    .donation-info h2 {
+        line-height: 1.2;
+        word-wrap: break-word;
+    }
+}
+
+/* High resolution displays */
+@media (min-width: 1200px) {
+    .video-background video {
+        opacity: 1;
+    }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .video-background video {
+        display: none;
+    }
+    
+    .video-overlay {
+        background: rgba(255, 255, 255, 0.3);
+    }
+    
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+</style>
