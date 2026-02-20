@@ -76,15 +76,18 @@ Currently, some assets are served from GitHub Pages and an external site. To hos
 
 The 11 images on `d9hhrg4mnvzow.cloudfront.net` are **already on Unbounce's CDN** — no action needed.
 
-### Step 1: Upload images via Unbounce Image Manager
+### Step 1: Upload images to Unbounce's CDN
 
-1. In the Unbounce builder, click **Images** in the left panel (or drag an Image element)
-2. Click **Upload** and add these files from the project root:
-   - `logo.png`
-   - `aerial.jpg`
-   - `tennis-texture.jpeg`
-3. After each upload, **right-click the image → Copy image URL** — it will look like `https://d9hhrg4mnvzow.cloudfront.net/...`
-4. Save each URL — you'll need them in Step 3
+Unbounce doesn't have a standalone media library — images must be uploaded via an image element. Workaround:
+
+1. In the Unbounce builder, add an **Image** element to the page
+2. Upload one of your asset files (e.g. `logo.png`)
+3. Once uploaded, **click the image on the canvas** → look at the image URL in the properties panel, or right-click the image in preview → **Copy image address**
+4. Save the CDN URL (it will look like `https://d9hhrg4mnvzow.cloudfront.net/...`)
+5. **Delete the image element** from the canvas — the file stays on Unbounce's CDN
+6. Repeat for each file: `aerial.jpg`, `tennis-texture.jpeg`
+
+> **Tip**: Alternatively, create a separate **Draft** page (never publish it) and upload all your images there. The CDN URLs will work across all your pages.
 
 ### Step 2: Upload the video
 
